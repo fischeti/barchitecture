@@ -1,0 +1,11 @@
+[project]
+name = "barchitecture"
+version = "0.1.0"
+description = "Hierarchical break down plots for architectures"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "jsonref>=1.1.0",
+    "jsonschema>=4.25.1",
+    "matplotlib>=3.10.7",
+]

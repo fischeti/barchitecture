@@ -1,0 +1,55 @@
+{
+    "colors": {
+        "PULPRed"             : "#A8322C",
+        "PULPRedLight"        : "#A8322CC8",
+        "PULPRedVeryLight"    : "#A8322C96",
+        "PULPBlue"            : "#1269B0",
+        "PULPBlueLight"       : "#1269B0C8",
+        "PULPBlueVeryLight"   : "#1269B096",
+        "PULPGreen"           : "#168638",
+        "PULPGreenLight"      : "#168638C8",
+        "PULPGreenVeryLight"  : "#16863896",
+        "PULPOrange"          : "#F29545",
+        "PULPOrangeLight"     : "#F29545C8",
+        "PULPOrangeVeryLight" : "#F2954596",
+        "PULPPurple"          : "#910569",
+        "PULPPurpleLight"     : "#910569C8",
+        "PULPPurpleVeryLight" : "#91056996",
+        "PULPOlive"           : "#48592C",
+        "PULPOliveLight"      : "#48592CC8",
+        "PULPOliveVeryLight"  : "#48592C96",
+        "PULPMarine"          : "#007996",
+        "PULPMarineLight"     : "#007996C8",
+        "PULPMarineVeryLight" : "#00799696",
+        "PULPGray"            : "#ABABAB",
+        "PULPGrayLight"       : "#ABABABC8",
+        "PULPGrayVeryLight"   : "#ABABAB96"
+    },
+    "fig": {
+        "fontsize": 12,
+        "fontfamily": "Sans Serif",
+        "ratio": 1.5,
+        "scale": 3.0
+    },
+    "si_unit" : "kGE",
+    "fmt": "{:.0f}",
+    "bars": {
+        "CPU": {
+            "labels": ["RegFile", "ALU", "LSU"],
+            "values": [1, 2, 3],
+            "colors": [{"$ref": "#/colors/PULPBlue"}, {"$ref": "#/colors/PULPOrange"}, {"$ref": "#/colors/PULPRed"}],
+            "parent": "System:CPU"
+        },
+        "System" : {
+            "labels": ["CPU", "Accel", "Interco"],
+            "values": [4, 5, 2],
+            "colors": [{"$ref": "#/colors/PULPRed"}, {"$ref": "#/colors/PULPOrange"}, {"$ref": "#/colors/PULPGreen"}]
+        },
+        "Accel" : {
+            "labels": ["Controller", "PEs"],
+            "values": [2, 3],
+            "colors": [{"$ref": "#/colors/PULPPurple"}, {"$ref": "#/colors/PULPOrange"}],
+            "parent": "System:Accel"
+        }
+    }
+}

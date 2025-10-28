@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "colors": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$"
+      }
+    },
+    "si_unit": { "type": "string", "default": "kGE" },
+    "fmt":     { "type": "string", "default": "{:.0f}" },
+
+    "fig": {
+      "type": "object",
+      "properties": {
+        "fontsize":   { "type": "number", "default": 12 },
+        "fontfamily": { "type": ["string","null"], "default": null },
+        "ratio":      { "type": "number", "default": 1.0 },
+        "scale":      { "type": "number", "default": 1.0 },
+        "bar_height": { "type": "number", "default": 0.3 }
+      },
+      "additionalProperties": false,
+      "default": {}
+    },
+
+    "bars": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "labels": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+          "values": { "type": "array", "items": { "type": "number" }, "minItems": 1 },
+          "colors": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                { "type": "string", "pattern": "^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$" },
+                { "type": "object", "properties": { "$ref": { "type": "string" } }, "required": ["$ref"], "additionalProperties": false }
+              ]
+            }
+          },
+          "parent": { "type": "string" },
+          "label_offset":    { "type": "array", "items": { "type": "number" }, "default": [] },
+          "label_offset_y":  { "type": "array", "items": { "type": "number" }, "default": [] },
+          "value_offset":    { "type": "array", "items": { "type": "number" }, "default": [] }
+        },
+        "required": ["labels", "values", "colors"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["colors", "bars"],
+  "additionalProperties": false
+}
