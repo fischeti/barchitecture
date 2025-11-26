@@ -10,8 +10,8 @@
       }
     },
     "si_unit": { "type": "string", "default": "kGE" },
-    "fmt":     { "type": "string", "default": "{:.0f}" },
-
+    "fmt":     { "type": "array", "items": { "type": "string" }, "default": ["{:.0f}"] },
+    "fmt_thresholds": { "type": "array", "items": { "type": "number" }, "default": [0] },
     "fig": {
       "type": "object",
       "properties": {

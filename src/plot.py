@@ -51,6 +51,12 @@ def preprocess_data(data):
 
     return data
 
+def fmt_str(value, fmt_list, thresholds):
+    for threshold, fmt in zip(thresholds, fmt_list):
+        if value >= threshold:
+            return fmt.format(value)
+    return fmt_list[-1].format(value)
+
 
 def curve_between_points(p1, p2, curve_height=0.5):
     curve_height = -curve_height if p2[1] < p1[1] else curve_height
@@ -105,7 +111,7 @@ def plot(data, show_plot=False, output_path=None):
             ax.text(
                 1.02,
                 i,
-                fmt.format(bar["total"]),
+                fmt_str(bar["total"], data["fmt"], data["fmt_thresholds"]),
                 ha="left",
                 va="center",
                 color="black",
@@ -131,7 +137,7 @@ def plot(data, show_plot=False, output_path=None):
             ax.text(
                 left + norm_value / 2 + value_offset,
                 i + 1.1 * bar_height,
-                fmt.format(value),
+                fmt_str(value, data["fmt"], data["fmt_thresholds"]),
                 ha="center",
                 va="center",
                 color="black",
