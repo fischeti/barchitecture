@@ -261,13 +261,15 @@ def main():
         "--output",
         "-o",
         type=Path,
-        default=Path.cwd() / "breakdown_plot.pdf",
-        help="Output file path for the generated plot.",
+        help="Output file path for the generated plot. Defaults to the data file name with .pdf extension.",
     )
     parser.add_argument(
         "--show", "-s", action="store_true", help="Show the plot instead of saving it."
     )
     args = parser.parse_args()
+
+    if args.output is None and not args.show:
+        args.output = args.data.with_suffix(".pdf")
 
     with open(args.data, "r") as f:
         data = jsonref.load(f, proxies=False)
