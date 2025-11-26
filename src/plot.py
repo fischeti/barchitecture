@@ -141,7 +141,7 @@ def plot(data, show_plot=False, output_path=None):
             # Plot norm_values below bars
             perc_number = value / sorted(bars.values(), key=lambda x: x["total"])[-1]["total"] * 100
             perc_fmt = (
-                f"{perc_number:.1f}" if perc_number < 10 else f"{perc_number:.0f}"
+                f"{perc_number:.1f}%" if perc_number < 10 else f"{perc_number:.0f}%"
             )
             ax.text(
                 left + norm_value / 2 + value_offset,
