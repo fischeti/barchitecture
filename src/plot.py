@@ -139,7 +139,7 @@ def plot(data, show_plot=False, output_path=None):
                 **fontdict,
             )
             # Plot norm_values below bars
-            perc_number = value / next(iter(bars.values()))["total"] * 100
+            perc_number = value / sorted(bars.values(), key=lambda x: x["total"])[-1]["total"] * 100
             perc_fmt = (
                 f"{perc_number:.1f}" if perc_number < 10 else f"{perc_number:.0f}"
             )
