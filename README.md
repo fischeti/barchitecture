@@ -15,7 +15,7 @@ uv run src/plot.py path/to/data.json --output /path/to/plot.pdf
 Alternatively, you can install the dependencies manually with pip if you don't have them already:
 
 ```bash
-pip install .
+pip install jsonref jsonschema matplotlib
 python src/plot.py path/to/data.json --output /path/to/plot.pdf
 ```
 
