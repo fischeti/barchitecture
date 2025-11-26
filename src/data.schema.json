@@ -44,7 +44,8 @@
           "parent": { "type": "string" },
           "label_offset":    { "type": "array", "items": { "type": "number" }, "default": [] },
           "label_offset_y":  { "type": "array", "items": { "type": "number" }, "default": [] },
-          "value_offset":    { "type": "array", "items": { "type": "number" }, "default": [] }
+          "value_offset":    { "type": "array", "items": { "type": "number" }, "default": [] },
+          "num_elements":    { "type": "array", "items": { "type": "number" }, "default": [] }
         },
         "required": ["labels", "values", "colors"],
         "additionalProperties": false

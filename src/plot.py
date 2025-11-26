@@ -48,7 +48,8 @@ def preprocess_data(data):
             bar["label_offset_y"] = [0] * len(bar["labels"])
         if not bar["value_offset"]:
             bar["value_offset"] = [0] * len(bar["labels"])
-
+        if not bar.get("num_elements"):
+            bar["num_elements"] = [1] * len(bar["labels"])
     return data
 
 def fmt_str(value, fmt_list, thresholds):
@@ -73,7 +74,6 @@ def plot(data, show_plot=False, output_path=None):
 
     si_unit = data["si_unit"]
     bars = data["bars"]
-    fmt = data["fmt"]
     bar_height = data["fig"]["bar_height"]
 
     if data["fig"]["fontfamily"]:
@@ -175,10 +175,37 @@ def plot(data, show_plot=False, output_path=None):
                     linewidth=1.5,
                     linestyle="dotted",
                 )
+            # Plot element count lines
+            for k in range(bar["num_elements"][j] - 1):
+                elem_x = left + (k + 1) * norm_value / bar["num_elements"][j]
+                ax.plot(
+                    [elem_x, elem_x],
+                    [i - bar_height / 2, i + bar_height / 2],
+                    color="white",
+                    alpha=0.7,
+                    linewidth=1.0,
+                    linestyle="dotted",
+                    )
 
         # Plot shades
         if "parent" in bar:
-            parent_bar_name, parent_subbar_name = bar["parent"].split(":")
+            match bar["parent"].split(":"):
+                case [parent_bar_name, parent_subbar_name]:
+                    block_idx = list(bars[parent_bar_name]["labels"]).index(parent_subbar_name)
+                    parent_bar_left = bars[parent_bar_name]["left"][block_idx]
+                    parent_bar_right = bars[parent_bar_name]["right"][block_idx]
+                case [parent_bar_name, parent_subbar_name, element]:
+                    block_idx = list(bars[parent_bar_name]["labels"]).index(parent_subbar_name)
+                    parent_bar_left = bars[parent_bar_name]["left"][block_idx]
+                    parent_bar_right = bars[parent_bar_name]["right"][block_idx]
+                    parrent_bar_norm_value = parent_bar_right - parent_bar_left
+                    parent_bar_num_elements = bars[parent_bar_name]["num_elements"][block_idx]
+                    parent_bar_left += int(element) * parrent_bar_norm_value / parent_bar_num_elements
+                    parent_bar_right = parent_bar_left + parrent_bar_norm_value / parent_bar_num_elements
+                case _:
+                    raise ValueError(
+                        f"Invalid parent format: {bar['parent']}. Expected 'BarName:SubbarName' or 'BarName:SubbarName:Element'."
+                    )
             parent_bar = bars[parent_bar_name]
             parent_idx = list(bars).index(parent_bar_name)
             v_dir = -1 if i < parent_idx else 1
@@ -188,7 +215,7 @@ def plot(data, show_plot=False, output_path=None):
                 (
                     Path.MOVETO,
                     (
-                        parent_bar["left"][block_idx],
+                        parent_bar_left,
                         parent_idx + v_dir * bar_height / 2,
                     ),
                 )
@@ -197,24 +224,24 @@ def plot(data, show_plot=False, output_path=None):
                 (
                     Path.LINETO,
                     (
-                        parent_bar["right"][block_idx],
+                        parent_bar_right,
                         parent_idx + v_dir * bar_height / 2,
                     ),
                 )
             ]
             path_area += curve_between_points(
-                (parent_bar["right"][block_idx], parent_idx + v_dir * bar_height / 2),
+                (parent_bar_right, parent_idx + v_dir * bar_height / 2),
                 (1, i - v_dir * bar_height / 2),
             )
             path_area += [(Path.LINETO, (0, i - v_dir * bar_height / 2))]
             path_area += curve_between_points(
                 (0, i - v_dir * bar_height / 2),
-                (parent_bar["left"][block_idx], parent_idx + v_dir * bar_height / 2),
+                (parent_bar_left, parent_idx + v_dir * bar_height / 2),
             )
             path_area += [
                 (
                     Path.CLOSEPOLY,
-                    (parent_bar["left"][block_idx], i - 1 + v_dir * bar_height / 2),
+                    (parent_bar_left, i - 1 + v_dir * bar_height / 2),
                 )
             ]
             codes, verts = zip(*path_area)
