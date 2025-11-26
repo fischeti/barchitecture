@@ -40,12 +40,13 @@ The input is a JSON file that specifies the data and configuration for the plot.
         "CPU": {
             "labels": ["RegFile", "ALU", "LSU"],
             "values": [1, 2, 3],
+            "num_elements": [4, 1, 1],
             "colors": [{"$ref": "#/colors/MyBlue"}, {"$ref": "#/colors/MyOrange"}, {"$ref": "#/colors/MyRed"}],
-            "parent": "System:CPU"
+            "parent": "System:4xCPU:2"
         },
         "System" : {
-            "labels": ["CPU", "Accel", "Interco"],
-            "values": [4, 5, 2],
+            "labels": ["4xCPU", "Accel", "Interco"],
+            "values": [6, 3, 2],
             "colors": [{"$ref": "#/colors/MyRed"}, {"$ref": "#/colors/MyOrange"}, {"$ref": "#/colors/MyGreen"}]
         },
         "Accel" : {

@@ -32,17 +32,18 @@
         "scale": 3.0
     },
     "si_unit" : "kGE",
-    "fmt": "{:.0f}",
+    "fmt": ["{:.0f}"],
     "bars": {
         "CPU": {
             "labels": ["RegFile", "ALU", "LSU"],
             "values": [1, 2, 3],
             "colors": [{"$ref": "#/colors/PULPBlue"}, {"$ref": "#/colors/PULPOrange"}, {"$ref": "#/colors/PULPRed"}],
-            "parent": "System:CPU"
+            "parent": "System:4xCPU:2"
         },
         "System" : {
-            "labels": ["CPU", "Accel", "Interco"],
-            "values": [4, 5, 2],
+            "labels": ["4xCPU", "Accel", "Interco"],
+            "num_elements": [4, 1, 1],
+            "values": [6, 3, 2],
             "colors": [{"$ref": "#/colors/PULPRed"}, {"$ref": "#/colors/PULPOrange"}, {"$ref": "#/colors/PULPGreen"}]
         },
         "Accel" : {
